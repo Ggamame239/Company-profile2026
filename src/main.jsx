@@ -237,16 +237,28 @@ function SiteHeader({ t, language, onLanguageChange, menuOpen, onMenuToggle, isP
             onClick={onMenuToggle}
             aria-expanded={menuOpen}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
-            className="grid size-10 place-items-center rounded border border-slate-200 text-slate-700"
+            className={`grid size-11 place-items-center rounded-xl border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-600 focus-visible:ring-offset-2 ${
+              menuOpen
+                ? "border-sky-200 bg-sky-50 text-sky-700"
+                : "border-slate-200 bg-white text-slate-700 hover:border-sky-200 hover:bg-sky-50 hover:text-sky-700"
+            }`}
           >
-            <span className="text-xl leading-none">{menuOpen ? "×" : "☰"}</span>
+            <span className="flex w-5 flex-col items-center gap-[5px]" aria-hidden="true">
+              <span className={`h-0.5 w-5 rounded-full bg-current transition-transform duration-300 ${menuOpen ? "translate-y-[7px] rotate-45" : ""}`} />
+              <span className={`h-0.5 w-5 rounded-full bg-current transition-opacity duration-200 ${menuOpen ? "opacity-0" : "opacity-100"}`} />
+              <span className={`h-0.5 w-5 rounded-full bg-current transition-transform duration-300 ${menuOpen ? "-translate-y-[7px] -rotate-45" : ""}`} />
+            </span>
           </button>
         </div>
       </div>
 
-      <div className="border-y border-slate-100">
+      <div className="relative border-t border-slate-100 lg:border-y">
         {/* ปรับขนาดตัวอักษรเมนูที่ text-[16px] และระยะห่างเมนูที่ gap-20 */}
-        <nav className={`mx-auto max-w-[1240px] items-center justify-center gap-20 px-5 py-3 text-[16px] font-medium uppercase tracking-wide text-slate-500 sm:px-8 lg:flex ${menuOpen ? "flex flex-col items-stretch gap-0 py-2" : "hidden"}`}>
+        <nav className={`absolute left-0 right-0 top-full z-40 mx-auto max-h-[calc(100vh-5rem)] max-w-[1240px] origin-top overflow-y-auto bg-white px-4 py-3 text-[16px] font-medium tracking-wide text-slate-600 shadow-xl ring-1 ring-slate-900/5 transition-all duration-200 sm:px-6 lg:static lg:flex lg:max-h-none lg:origin-center lg:flex-row lg:items-center lg:justify-center lg:gap-20 lg:overflow-visible lg:bg-transparent lg:px-8 lg:py-3 lg:shadow-none lg:ring-0 lg:pointer-events-auto ${
+          menuOpen
+            ? "visible flex translate-y-0 flex-col items-stretch gap-1 opacity-100"
+            : "invisible pointer-events-none -translate-y-2 opacity-0 lg:visible lg:translate-y-0 lg:opacity-100"
+        }`}>
           {t.nav.map((label, index) => {
             const hrefs = [anchor("home"), anchor("about"), anchor("services"), anchor("machinery"), "Product.html", anchor("contact")];
             return (
@@ -254,9 +266,10 @@ function SiteHeader({ t, language, onLanguageChange, menuOpen, onMenuToggle, isP
                 key={label}
                 href={hrefs[index]}
                 onClick={onNavigate}
-                className="relative block w-full border-b border-slate-100 py-3 transition-colors after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-sky-600 after:transition-all after:duration-300 hover:text-sky-700 hover:after:w-full focus-visible:text-sky-700 focus-visible:outline-none focus-visible:after:w-full lg:w-fit lg:border-0 lg:py-1"
+                className="group relative flex w-full items-center justify-between rounded-xl px-4 py-3.5 transition-colors hover:bg-sky-50 hover:text-sky-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-600 lg:w-fit lg:justify-center lg:rounded-none lg:bg-transparent lg:px-0 lg:py-1 lg:after:absolute lg:after:-bottom-3 lg:after:left-0 lg:after:h-0.5 lg:after:w-0 lg:after:bg-sky-600 lg:after:transition-all lg:after:duration-300 lg:hover:bg-transparent lg:hover:after:w-full"
               >
-                {label}
+                <span>{label}</span>
+                <span aria-hidden="true" className="text-lg leading-none text-sky-600 transition-transform group-hover:translate-x-1 lg:hidden">›</span>
               </a>
             );
           })}
