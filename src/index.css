@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+:root {
+  /* Inter สำหรับภาษาอังกฤษ และ Noto Sans Thai สำหรับภาษาไทย */
+  font-family: "Inter", "Noto Sans Thai", Tahoma, Arial, sans-serif;
+  /* สีข้อความและพื้นหลังเริ่มต้นของหน้าเว็บ */
+  color: #202833;
+  background: #fff;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  color: #fff;
+  /* สีพื้นหลังข้อความเมื่อผู้ใช้ลากเลือก */
+  background: #0877c9;
+}
